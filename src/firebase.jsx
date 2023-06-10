@@ -28,7 +28,7 @@ const auth = getAuth()
 const db = getFirestore()
 
 const usersCollection = collection(db , "users")
-const {currentUser} = useAuthContext()
+
 
 
 
@@ -59,7 +59,7 @@ async function createDocumentWithCollection(path, documentData) {
 
   async function setLog(path , logData){
     const userLogRef = doc(db , path)
-    
+
 
 
   }

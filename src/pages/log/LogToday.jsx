@@ -8,62 +8,18 @@ import LogExercise from '../../components/log/LogExercise';
 import LogSet from '../../components/log/LogSet';
 import DisplayLog from '../../components/log/DisplayLog';
 
+import { useAuth } from '../../contexts/auth';
+
 import { getDate } from '../../utils';
+import { setDoc , doc  } from 'firebase/firestore';
+import {db} from '../../firebase'
 
 export default function () {
 
+    const {currentUser} = useAuth()
 
     const [log, setLog] = useState({
-        Chest: {
-            bench: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ]
-        },
-        Bench: {
-            bench: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ],
-            flies: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ]
-        },
-        Biceps: {
-            bench: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ]
-        },
-        Bench: {
-            bench: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ],
-            flies: [
-                {
-                    set: 1,
-                    rep: '2',
-                    weight: '2'
-                }
-            ]
-        }
+  
     });
     const [isBodypartsSelected, setIsBodypartsSelected] = useState(false)
     const [isAddExerciseActive, setIsAddExerciseActive] = useState(false)
@@ -71,9 +27,8 @@ export default function () {
 
     const [selectedBodyPart, setSelectedBodyPart] = useState("")
     const [selectedExercise, setSelectedExercise] = useState("")
-
-
     const [exerciseInput, setExerciseInput] = useState("")
+
 
     const [setInput, setSetInput] = useState({ reps: '', weight: '' })
 
@@ -89,7 +44,7 @@ export default function () {
                 return {
                     ...prevLog,
                     [checkboxValue]: {
-
+                    
                     }
 
 
@@ -202,26 +157,37 @@ export default function () {
         }));
     }
 
+    function handleSetLogtoDb(){
+
+
+        const docRef = doc(db ,`/users/${currentUser.uid}/userLogs/${getDate()}`)
+        
+        setDoc(docRef , log)
+    }
 
 
 
-    const loggedBodyPartsElement = Object.entries(log).map(([bodyPartKey, value]) => {
-        return <div className='w-full flex justify-center items-center flex-col mt-4 '>
+
+
+
+    const loggedBodyPartsElement = Object.entries(log)?.map(([bodyPartKey, value]) => {
+        return <div key={nanoid()} className='w-full flex justify-center items-center flex-col mt-4 '>
             <div className='w-3/4 h-[50px] bg-white flex justify-between items-center px-5 shadow-md rounded-3xl text-lg'>
                 <span>{bodyPartKey}</span>
                 <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="public/icons/add-black.svg" alt="" />
             </div>
 
-            {Object.entries(value).map(([exercise, exerciseValue]) => {
-                return <div className=' w-full flex justify-center items-center flex-col'>
+            {Object.entries(value)?.map(([exercise, exerciseValue]) => {
+                return <div key={nanoid()} className=' w-full flex justify-center items-center flex-col'>
                     <div onClick={() => handleIsSetActive(bodyPartKey, exercise)}  className='flex items-center justify-center  gap-6 px-14 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600  rounded-3xl  '>
                         {exercise}
                         <img src="public/icons/add-grey.svg" alt="" />
                     </div>
-                    <div className=' flex flex-col justify-center '>
-                        {exerciseValue.map(setObj => {
+                    <div  className=' flex flex-col justify-center '>
+                        {exerciseValue?.map(setObj => {
+                            console.log(exerciseValue)
                             return (
-                                <div className=''>
+                                <div key={nanoid()} className=''>
                                     <div className='flex gap-10 mt-3 text-slate-500 text-xs'>
                                         <div className='flex justify-between gap-3 min-w-min '>
                                             <div className='flex gap-2'><span>Set 0{setObj.set}</span><span>::</span></div>
@@ -247,6 +213,10 @@ export default function () {
         </div>
     })
 
+
+   
+
+
     // const loggedBodyParts = Object.keys(log)
     // const loggedBodyPartsElement = loggedBodyParts.map(bodyPart => {
     //     return (
@@ -255,31 +225,23 @@ export default function () {
     //                 <span>{bodyPart}</span>
     //                 <img onClick={() => handleisAddExerciseActive(bodyPart)} src="public/icons/add-black.svg" alt="" />
     //             </div>
-    //           
     //             {Object.keys(log[bodyPart]).map(excercise => {
     //                 return Object.keys(excercise).map(exercise => {
     //                     return (<div onClick={() => handleIsSetActive(bodyPart, exercise)} className=' min-w-[50%] mt-2 h-[40px] bg-white text-slate-500 flex justify-between gap-5 rounded-3xl items-center px-14'>
     //                         {exercise}
     //                         <img src="public/icons/add-grey.svg" alt="" />
-
     //                     </div>)
     //                 })
     //             })}
     //         </div>
-
     //     )
     // })
 
 
 
-
-
-
-
-
     return (
 
-        isBodypartsSelected ?
+        !isBodypartsSelected ?
 
             <LogBodyPartSelection
                 handleCheckboxChange={handleCheckboxChange}
@@ -293,7 +255,7 @@ export default function () {
                     loggedBodyPartsElement={loggedBodyPartsElement}
                 />
                 <div className='w-full flex justify-center mt-5 pb-5 bg-background-100'>
-                <button className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>Finish Log</button>
+                <button onClick={handleSetLogtoDb} className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>Finish Log</button>
                 </div>
                 <LogExercise
                     bodyPart={selectedBodyPart}

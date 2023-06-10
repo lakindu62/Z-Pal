@@ -9,6 +9,7 @@ import ResetPassword from './pages/ResetPassword.jsx'
 
 import Dashboard from './pages/dashboard.jsx'
 import LogToday from './pages/log/LogToday.jsx'
+import Progress from './pages/Progress.jsx'
 
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route element={<Nav />}>
             <Route path='/' element={<Dashboard />} />
             <Route path='/log-today' element={<LogToday />} />
+            <Route path='/progress' element={<Progress/>} />
           </Route>
           
           <Route path='/update-profile' element={<UpdateProfile />} />

@@ -23,7 +23,7 @@ export default function Nav() {
                             <div className='bg-background-100 w-[80%] flex justify-center rounded  h-[65%] '>
                                 <Link to='/' className='w-[19.9%] flex justify-center items-center smallText '>Profile</Link>
                                 <Link to="/log-today" className='w-[19.9%] flex justify-center items-center smallText '>Log</Link>
-                                <Link className='w-[19.9%] flex justify-center items-center smallText '>Progress</Link>
+                                <Link to='/progress' className='w-[19.9%] flex justify-center items-center smallText '>Progress</Link>
                                 <Link className='w-[19.9%] flex justify-center items-center smallText '>Friends</Link>
                                 <Link className='w-[19.9%] flex justify-center items-center smallText '>Settings</Link>
                             </div>
