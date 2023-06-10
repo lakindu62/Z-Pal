@@ -13,13 +13,13 @@ import {
 
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_APIKEY,
-    authDomain: import.meta.env.VITE_AUTHDOMAIN ,
-    projectId: import.meta.env.VITE_PROJECTID,
-    storageBucket: import.meta.env.VITE_STORAGEBUCKET,
-    messagingSenderId:import.meta.env.VITE_MESSAGINGSENDERID,
-    appId: import.meta.env.VITE_APPID ,
-    measurementId: import.meta.env.VITE_MEASUREMENTID
+    apiKey: "AIzaSyAw9jutLxgF7aeDqux5z5TX-EIoADkExDI",
+    authDomain: "fir-9-dojo-a880f.firebaseapp.com",
+    projectId: "fir-9-dojo-a880f",
+    storageBucket: "fir-9-dojo-a880f.appspot.com",
+    messagingSenderId:"993497437100",
+    appId: "1:993497437100:web:bfbdcd7aa62bf23c33e009",
+    measurementId: "G-PC8S4TJ553"
   };
 
 
