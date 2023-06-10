@@ -174,14 +174,14 @@ export default function () {
         return <div key={nanoid()} className='w-full flex justify-center items-center flex-col mt-4 '>
             <div className='w-3/4 h-[50px] bg-white flex justify-between items-center px-5 shadow-md rounded-3xl text-lg'>
                 <span>{bodyPartKey}</span>
-                <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="public/icons/add-black.svg" alt="" />
+                <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="/icons/add-black.svg" alt="" />
             </div>
 
             {Object.entries(value)?.map(([exercise, exerciseValue]) => {
                 return <div key={nanoid()} className=' w-full flex justify-center items-center flex-col'>
                     <div onClick={() => handleIsSetActive(bodyPartKey, exercise)}  className='flex items-center justify-center  gap-6 px-14 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600  rounded-3xl  '>
                         {exercise}
-                        <img src="public/icons/add-grey.svg" alt="" />
+                        <img src="/icons/add-grey.svg" alt="" />
                     </div>
                     <div  className=' flex flex-col justify-center '>
                         {exerciseValue?.map(setObj => {
@@ -223,13 +223,13 @@ export default function () {
     //         <div className='w-full flex justify-center items-center flex-col'>
     //             <div className='w-3/4 h-[50px] bg-white flex justify-between items-center px-5 shadow-md rounded-3xl'>
     //                 <span>{bodyPart}</span>
-    //                 <img onClick={() => handleisAddExerciseActive(bodyPart)} src="public/icons/add-black.svg" alt="" />
+    //                 <img onClick={() => handleisAddExerciseActive(bodyPart)} src="/icons/add-black.svg" alt="" />
     //             </div>
     //             {Object.keys(log[bodyPart]).map(excercise => {
     //                 return Object.keys(excercise).map(exercise => {
     //                     return (<div onClick={() => handleIsSetActive(bodyPart, exercise)} className=' min-w-[50%] mt-2 h-[40px] bg-white text-slate-500 flex justify-between gap-5 rounded-3xl items-center px-14'>
     //                         {exercise}
-    //                         <img src="public/icons/add-grey.svg" alt="" />
+    //                         <img src="/icons/add-grey.svg" alt="" />
     //                     </div>)
     //                 })
     //             })}

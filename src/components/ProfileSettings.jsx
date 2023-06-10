@@ -25,7 +25,7 @@ export default function ProfileSettings({ onClick, isSettingsActive , displayIma
         <div className='flex flex-col gap-5 relative justify-center items-center   '>
         {!isUploadImageActive ? 
         <div>
-            {isSettingsActive && <img onClick={onClick} className='h-12 w-12 object-cover bg-white absolute -right-14 -top-9 rounded-full flex items-center justify-center' src='public/icons/settingsExit.svg' />}
+            {isSettingsActive && <img onClick={onClick} className='h-12 w-12 object-cover bg-white absolute -right-14 -top-9 rounded-full flex items-center justify-center' src='/icons/settingsExit.svg' />}
             <div className='flex justify-start gap-2 items-center px-10 '>
                 <img onClick={handleUploadImage} className='h-16 w-16 object-cover rounded-full' src={`${displayImageUrl ? displayImageUrl : "/icons/noProfileIcon.png"}`}  alt="" />
                 <div className='flex flex-col'>

@@ -7,7 +7,7 @@ export default function LogBodyPartSelection({handleCheckboxChange ,handleIsBody
                 <div className='flex flex-col items-center gap-3'>
                     <div className='subHeaderText'>What are you training today</div>
                     <div className='flex items-center justify-center px-2 h-[27px] bg-[#F6F6F6] rounded-2xl gap-3 '>
-                        <img src="public/icons/calender.svg" alt="" />
+                        <img src="/icons/calender.svg" alt="" />
                         <span className=''>{getDate()}</span>
                     </div>
                 </div>

@@ -39,7 +39,7 @@ export default function TodaysLog({ path }) {
         //                     <div key={nanoid()} className='w-full bg-black '>
         //                         <div className='w-3/4 h-[50px] bg-white flex justify-between items-center px-5 shadow-md rounded-3xl text-lg'>
         //                             <span>{bodyPart}</span>
-        //                             <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="public/icons/add-black.svg" alt="" />
+        //                             <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="/icons/add-black.svg" alt="" />
         //                         </div>
 
         //                         {Object.entries(bodyPartValue).map(([exercise, exerciseValue]) => {
@@ -47,7 +47,7 @@ export default function TodaysLog({ path }) {
         //                                 <div key={nanoid()} className='w-full '>
         //                                     <div onClick={() => handleIsSetActive(bodyPartKey, exercise)} className='flex items-center justify-center gap-6 px-14 h-[40px] w-[50%] mt-4 bg-background-200 shadow-inner text-slate-600 rounded-3xl'>
         //                                         {exercise}
-        //                                         <img src="public/icons/add-grey.svg" alt="" />
+        //                                         <img src="/icons/add-grey.svg" alt="" />
         //                                     </div>
         //                                     <div className='flex flex-col justify-center'>
         //                                         {exerciseValue.map((setObj) => {
