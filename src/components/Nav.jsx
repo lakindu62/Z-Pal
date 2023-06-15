@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
 export default function Nav() {
@@ -20,12 +20,12 @@ export default function Nav() {
                     </div>
                     <div className='lowLevelNavigation flex justify-center '>
                         <div className='bg-white  flex justify-center items-center  h-[45px] w-full '>
-                            <div className='bg-background-100 w-[80%] flex justify-center rounded  h-[65%] '>
-                                <Link to='/' className='w-[19.9%] flex justify-center items-center smallText '>Profile</Link>
-                                <Link to="/log-today" className='w-[19.9%] flex justify-center items-center smallText '>Log</Link>
-                                <Link to='/progress' className='w-[19.9%] flex justify-center items-center smallText '>Progress</Link>
-                                <Link className='w-[19.9%] flex justify-center items-center smallText '>Friends</Link>
-                                <Link className='w-[19.9%] flex justify-center items-center smallText '>Settings</Link>
+                            <div className='bg-background-100 w-[80%] flex justify-center rounded  h-[65%] items-center '>
+                                <NavLink to='/' className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'w-[19.9%] flex justify-center items-center smallText '}>Profile</NavLink>
+                                <NavLink to="/log-today" className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'w-[19.9%] flex justify-center items-center smallText '}>Log</NavLink>
+                                <NavLink to='/progress' className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'w-[19.9%] flex justify-center items-center smallText '}>Progress</NavLink>
+                                <NavLink to="/friends" className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'w-[19.9%] flex justify-center items-center smallText '}>Friends</NavLink>
+                                <NavLink to="/settings" className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'w-[19.9%] flex justify-center items-center smallText '}>Settings</NavLink>
                             </div>
                         </div>
             
