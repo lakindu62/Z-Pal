@@ -7,7 +7,6 @@
 
 
 
-
 *{
   font-family: 'SF Pro Display', sans-serif;
 }
@@ -273,6 +272,8 @@ body {
 .tab.active {
 
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+background-color:#2C2A2A ;
+color: white;
 
 
 }
@@ -283,7 +284,8 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 .tab-content {
   width: 90%;
-  height: 186px;
+  margin-bottom: 2em;
+  max-width: 800px;
   
   
   background: #EAEAEA;
@@ -291,6 +293,17 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 }
 
+.navBar::after{
+  content: '';
+  height: 80%;
+  width: 2px;
+  position: absolute;
+  left: 0;
+  border-radius: 1em;
+  top: 10%;
+  background-color: #d9d9d9;
+  display: block;
+}
 
 .NavBarActive{
   background: #FFFFFF;
@@ -299,3 +312,25 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 6.93px;
   transition: all 0.25s cubic-bezier(1, 0.68, 0.16, 0.9);
 }
+.NavBarActive + a::after{
+  width: 0px;
+}
+
+
+
+
+.exerciseName::after{
+  content: '';
+  height: 100%;
+  width: 3px;
+  position: absolute;
+  left: 0;
+  border-radius: 1em;
+  top: 0;
+  background-color: #d9d9d9;
+  display: block;
+}
+
+
+
+/* FORMS FOR MOBILE */
