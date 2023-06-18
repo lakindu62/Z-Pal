@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid';
 
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import LogBodyPartSelection from '../../components/log/LogBodyPartSelection'
 import LogExercise from '../../components/log/LogExercise';
@@ -11,15 +11,16 @@ import DisplayLog from '../../components/log/DisplayLog';
 import { useAuth } from '../../contexts/auth';
 
 import { getDate } from '../../utils';
-import { setDoc , doc  } from 'firebase/firestore';
-import {db} from '../../firebase'
+
+import { setDoc, doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../firebase'
 
 export default function () {
 
-    const {currentUser} = useAuth()
-
+    const { currentUser } = useAuth()
+    const navigate = useNavigate()
     const [log, setLog] = useState({
-  
+
     });
     const [isBodypartsSelected, setIsBodypartsSelected] = useState(false)
     const [isAddExerciseActive, setIsAddExerciseActive] = useState(false)
@@ -29,9 +30,32 @@ export default function () {
     const [selectedExercise, setSelectedExercise] = useState("")
     const [exerciseInput, setExerciseInput] = useState("")
 
-
     const [setInput, setSetInput] = useState({ reps: '', weight: '' })
 
+  
+    const location = useLocation()
+    
+   
+
+
+    useEffect(() => {
+        console.log(location.state ? location.state : null)
+        const date = location.state
+        if(location.state){
+            const path = `/users/${currentUser.uid}/userLogs/${date}`
+            console.log(path)
+           const docRef = doc(db, path)
+   
+           onSnapshot(docRef , snapshot =>{
+               console.log(snapshot)
+               setLog(snapshot.data())
+   
+           })
+   }
+        
+    }, [location])
+
+ 
 
 
 
@@ -44,7 +68,7 @@ export default function () {
                 return {
                     ...prevLog,
                     [checkboxValue]: {
-                    
+
                     }
 
 
@@ -101,7 +125,7 @@ export default function () {
 
 
 
-    console.log(log)
+
 
 
 
@@ -157,18 +181,23 @@ export default function () {
         }));
     }
 
-    function handleSetLogtoDb(){
+    function handleSetLogtoDb() {
 
 
-        const docRef = doc(db ,`/users/${currentUser.uid}/userLogs/${getDate()}`)
-        
-        setDoc(docRef , log)
+        const docRef = doc(db, `/users/${currentUser.uid}/userLogs/${location.state ?location.state :   getDate()  }`)
+        setDoc(docRef, log)
+            .then(() => {
+                navigate('/progress')
+            })
+            .catch(err=>{
+                console.log(err)
+            })
     }
 
 
 
 
-
+console.log("original log = > " , log && log)
 
     const loggedBodyPartsElement = Object.entries(log)?.map(([bodyPartKey, value]) => {
         return <div key={nanoid()} className='w-full flex justify-center items-center flex-col mt-4 '>
@@ -179,11 +208,11 @@ export default function () {
 
             {Object.entries(value)?.map(([exercise, exerciseValue]) => {
                 return <div key={nanoid()} className=' w-full flex justify-center items-center flex-col'>
-                    <div onClick={() => handleIsSetActive(bodyPartKey, exercise)}  className='flex items-center justify-center  gap-6 px-14 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600  rounded-3xl  '>
+                    <div onClick={() => handleIsSetActive(bodyPartKey, exercise)} className='flex items-center justify-center  gap-6 px-14 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600  rounded-3xl  '>
                         {exercise}
                         <img src="/icons/add-grey.svg" alt="" />
                     </div>
-                    <div  className=' flex flex-col justify-center '>
+                    <div className=' flex flex-col justify-center '>
                         {exerciseValue?.map(setObj => {
                             console.log(exerciseValue)
                             return (
@@ -214,34 +243,17 @@ export default function () {
     })
 
 
-   
 
 
-    // const loggedBodyParts = Object.keys(log)
-    // const loggedBodyPartsElement = loggedBodyParts.map(bodyPart => {
-    //     return (
-    //         <div className='w-full flex justify-center items-center flex-col'>
-    //             <div className='w-3/4 h-[50px] bg-white flex justify-between items-center px-5 shadow-md rounded-3xl'>
-    //                 <span>{bodyPart}</span>
-    //                 <img onClick={() => handleisAddExerciseActive(bodyPart)} src="/icons/add-black.svg" alt="" />
-    //             </div>
-    //             {Object.keys(log[bodyPart]).map(excercise => {
-    //                 return Object.keys(excercise).map(exercise => {
-    //                     return (<div onClick={() => handleIsSetActive(bodyPart, exercise)} className=' min-w-[50%] mt-2 h-[40px] bg-white text-slate-500 flex justify-between gap-5 rounded-3xl items-center px-14'>
-    //                         {exercise}
-    //                         <img src="/icons/add-grey.svg" alt="" />
-    //                     </div>)
-    //                 })
-    //             })}
-    //         </div>
-    //     )
-    // })
+
+
+
 
 
 
     return (
 
-        !isBodypartsSelected ?
+        !isBodypartsSelected && !location.state ?
 
             <LogBodyPartSelection
                 handleCheckboxChange={handleCheckboxChange}
@@ -253,9 +265,10 @@ export default function () {
             <div className='relative bg-background-100'>
                 <DisplayLog
                     loggedBodyPartsElement={loggedBodyPartsElement}
+                    dateFromLocation={location.state}
                 />
                 <div className='w-full flex justify-center mt-5 pb-5 bg-background-100'>
-                <button onClick={handleSetLogtoDb} className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>Finish Log</button>
+                    <button onClick={handleSetLogtoDb} className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>Finish Log</button>
                 </div>
                 <LogExercise
                     bodyPart={selectedBodyPart}
@@ -277,7 +290,7 @@ export default function () {
                     setSetInput={setSetInput}
                     handleIsSetActive={handleIsSetActive}
                 />
-                
+
 
             </div>
     )

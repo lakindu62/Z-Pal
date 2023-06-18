@@ -1,6 +1,6 @@
-import React , {useRef , useState} from "react"
+import React , {useRef , useState , useEffect} from "react"
 import {useAuth} from "../contexts/auth"
-import {Link , useNavigate} from "react-router-dom"
+import {Link , useNavigate , useLocation} from "react-router-dom"
 
 
 export default function Login(){
@@ -15,6 +15,7 @@ export default function Login(){
     const passwordRef = useRef(null)
 
 
+ 
 
 
     async function handleSubmit(e){

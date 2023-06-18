@@ -6,9 +6,13 @@ import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firesto
 import { useAuth } from '../contexts/auth';
 import { getDate, dateWithFormat, getYesterdaysDate } from '../utils'
 
+import { useNavigate , useLocation } from 'react-router-dom';
+
 
 const Tabs = () => {
     const { currentUser } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const [bodyParts, setBodyParts] = useState([])
     const [activeTab, setActiveTab] = useState("#");
@@ -97,7 +101,9 @@ const Tabs = () => {
 
 
 
-
+    function handleEditLog(){
+        navigate('/log-today' , {state:dateWithFormat(date)} )
+    }
 
 
 
@@ -118,7 +124,7 @@ const Tabs = () => {
                     </div>
 
                     <div className='w-1/4'>
-                        <button className=''>Relog</button>
+                        <button className='' onClick={handleEditLog}>Edit</button>
                     </div>
                 </div>
                 <div className='flex flex-col items-center  '>
@@ -128,7 +134,7 @@ const Tabs = () => {
                                 const bodyPartName = Object.keys(data)[0]
                                 return (<li
                                     className={`tab cursor-pointer  ${activeTab === `#${bodyPartName}` ? 'active' : ''}
-                                     text-black px-3 text-sm  rounded-xl relative after:content-[''] after:h-5/6 after:w-[2px] after:block after:absolute after:left-0 after:bg-background-200 after:top-[10%] first:after:w-0
+                              text-black px-3 text-sm  rounded-xl relative after:content-[''] after:h-5/6 after:w-[2px] after:block after:absolute after:left-0 after:bg-background-200 after:top-[10%] first:after:w-0
                                     `}
                                     onClick={() => handleTabClick(`#${bodyPartName}`)}
                                 >
@@ -208,8 +214,8 @@ function InputDate({ handleDateSubmit }) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        handleDateSubmit(date)
 
+        handleDateSubmit(date)
     }
 
 
