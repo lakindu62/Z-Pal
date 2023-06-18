@@ -20,7 +20,7 @@ export default function Nav() {
                     </div>
                     <div className='lowLevelNavigation flex justify-center '>
                         <div className='bg-white  flex justify-center items-center  h-[45px] w-full '>
-                            <div className='bg-background-100 w-[80%] flex justify-center rounded  h-[65%] items-center '>
+                            <div className='bg-background-100 w-[95%] flex justify-center rounded  h-[65%] items-center '>
                                 <NavLink to='/' className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'relative w-[16.3%] flex justify-center items-center smallText navBar text-black px-3 text-sm  rounded-xl  navBar first:after:w-0 '}>Profile</NavLink>
                                 <NavLink to="/log-today" className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'relative w-[16.3%] flex justify-center items-center smallText navBar  '}>Log</NavLink>
                                 <NavLink to='/progress' className={({isActive})=> isActive ? 'w-[15.9%] flex justify-center items-center smallText NavBarActive h-[80%]' : 'relative w-[16.3%] flex justify-center items-center smallText navBar  '}>Progress</NavLink>

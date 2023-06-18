@@ -111,11 +111,11 @@ const Tabs = () => {
 
     return (
         <div className='w-full flex items-center justify-center flex-col'>
-            <div className='w-11/12 text-center text-lg  font-bold'>Log History</div>
+            <div className='w-11/12 text-center text-lg  font-bold mb-6'>Log History</div>
             <div className='w-11/12 bg-white rounded-3xl '>
-                <div className='flex justify-between px-2 py-2'>
+                <div className='flex justify-between px-2 py-2 mt-4 mb-4'>
                     <div className='w-1/4'></div>
-                    <div className='flex gap-3'>
+                    <div className='flex gap-3 justify-center items-center'>
                         <img onClick={() => modifyDate(-1)} src="/icons/backwards.svg" alt="" />
                         <span onClick={handleInputDataClick}>{getDateEl()}</span>
                         <img onClick={() => modifyDate(+1)} src="/icons/forwards.svg" alt="" />
@@ -124,7 +124,7 @@ const Tabs = () => {
                     </div>
 
                     <div className='w-1/4'>
-                        <button className='' onClick={handleEditLog}>Edit</button>
+                        <button className=' bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl' onClick={handleEditLog}>Edit</button>
                     </div>
                 </div>
                 <div className='flex flex-col items-center  '>
