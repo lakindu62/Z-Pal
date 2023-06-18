@@ -32,30 +32,30 @@ export default function () {
 
     const [setInput, setSetInput] = useState({ reps: '', weight: '' })
 
-  
+
     const location = useLocation()
-    
-   
+
+
 
 
     useEffect(() => {
         console.log(location.state ? location.state : null)
         const date = location.state
-        if(location.state){
+        if (location.state) {
             const path = `/users/${currentUser.uid}/userLogs/${date}`
             console.log(path)
-           const docRef = doc(db, path)
-   
-           onSnapshot(docRef , snapshot =>{
-               console.log(snapshot)
-               setLog(snapshot.data())
-   
-           })
-   }
-        
+            const docRef = doc(db, path)
+
+            onSnapshot(docRef, snapshot => {
+                console.log(snapshot)
+                setLog(snapshot.data())
+
+            })
+        }
+
     }, [location])
 
- 
+
 
 
 
@@ -184,12 +184,12 @@ export default function () {
     function handleSetLogtoDb() {
 
 
-        const docRef = doc(db, `/users/${currentUser.uid}/userLogs/${location.state ?location.state :   getDate()  }`)
+        const docRef = doc(db, `/users/${currentUser.uid}/userLogs/${location.state ? location.state : getDate()}`)
         setDoc(docRef, log)
             .then(() => {
                 navigate('/progress')
             })
-            .catch(err=>{
+            .catch(err => {
                 console.log(err)
             })
     }
@@ -197,7 +197,7 @@ export default function () {
 
 
 
-console.log("original log = > " , log && log)
+    console.log("original log = > ", log && log)
 
     const loggedBodyPartsElement = Object.entries(log)?.map(([bodyPartKey, value]) => {
         return <div key={nanoid()} className='w-full flex justify-center items-center flex-col mt-4 '>
@@ -268,7 +268,7 @@ console.log("original log = > " , log && log)
                     dateFromLocation={location.state}
                 />
                 <div className='w-full flex justify-center mt-5 pb-5 bg-background-100'>
-                    <button onClick={handleSetLogtoDb} className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>Finish Log</button>
+                    <button onClick={handleSetLogtoDb} className='mt-10 bg-iphoneBlue-100 text-white px-5 py-1 rounded-xl'>{location.state ? ' Update Log' : 'Finish Log'}</button>
                 </div>
                 <LogExercise
                     bodyPart={selectedBodyPart}
