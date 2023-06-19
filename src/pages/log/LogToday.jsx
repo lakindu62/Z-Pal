@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid';
-
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import LogBodyPartSelection from '../../components/log/LogBodyPartSelection'
 import LogExercise from '../../components/log/LogExercise';
 import LogSet from '../../components/log/LogSet';
 import DisplayLog from '../../components/log/DisplayLog';
-
 import { useAuth } from '../../contexts/auth';
-
 import { getDate } from '../../utils';
-
 import { setDoc, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase'
 
@@ -123,6 +118,17 @@ export default function () {
         });
     }
 
+    function handleRemoveSet(bodyPartKey, exercise, set) {
+        setLog((prevLog) => {
+            const updatedLog = { ...prevLog };
+            const exerciseSets = updatedLog[bodyPartKey][exercise];
+            const filteredSets = exerciseSets.filter((setObj) => setObj.set !== set);
+            updatedLog[bodyPartKey][exercise] = filteredSets;
+            return updatedLog;
+        });
+    }
+
+
 
 
 
@@ -226,7 +232,7 @@ export default function () {
                                                 <span>Weight {setObj.weight}kg</span>
                                             </div>
                                         </div>
-                                        <img src="/icons/remove-grey.svg" alt="" />
+                                        <img onClick={() => handleRemoveSet(bodyPartKey, exercise, setObj.set)} src="/icons/remove-grey.svg" alt="" />
 
                                     </div>
                                     <span className='h-0.5 w-full mt-1 bg-background-200 block'></span>
