@@ -35,6 +35,7 @@ export default function LogSet({
                     <input
                         className='border px-2 py-1'
                         type="tel"
+                        pattern="[0-9]{10}"
                         onChange={handleRepsChange}
                         value={setInput.reps}
                         placeholder='No of Reps'
@@ -42,6 +43,7 @@ export default function LogSet({
                     <input
                         className='border px-2 py-1'
                         type="tel"
+                        pattern="[0-9]{10}"
                         onChange={handleWeightChange}
                         value={setInput.weight}
                         placeholder='Kg'
