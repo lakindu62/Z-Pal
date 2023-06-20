@@ -214,8 +214,8 @@ export default function () {
 
             {Object.entries(value)?.map(([exercise, exerciseValue]) => {
                 return <div key={nanoid()} className=' w-full flex justify-center items-center flex-col'>
-                    <div onClick={() => handleIsSetActive(bodyPartKey, exercise)} className='flex items-center justify-center  gap-6 px-14 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600  rounded-3xl  '>
-                        {exercise}
+                    <div onClick={() => handleIsSetActive(bodyPartKey, exercise)} className='flex items-center justify-center max-w-[600px]  gap-6 px-4 py-2 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600 text-xs font-bold tracking-tight rounded-3xl  '>
+                        <span className='min-w-[100px]'>{exercise}</span>
                         <img src="/icons/add-grey.svg" alt="" />
                     </div>
                     <div className=' flex flex-col justify-center '>
@@ -232,7 +232,7 @@ export default function () {
                                                 <span>Weight {setObj.weight}kg</span>
                                             </div>
                                         </div>
-                                        <img onClick={() => handleRemoveSet(bodyPartKey, exercise, setObj.set)} src="/icons/remove-grey.svg" alt="" />
+                                        <img  className='w-4' onClick={() => handleRemoveSet(bodyPartKey, exercise, setObj.set)} src="/icons/remove-grey.svg" alt="" />
 
                                     </div>
                                     <span className='h-0.5 w-full mt-1 bg-background-200 block'></span>

@@ -8,7 +8,7 @@ import { useAuth } from "../contexts/auth"
 
 
 function ProfilePictureUpload({handleUploadImage , isUploadImageActive ,displayImageUrl}) {
-    const [selectedImage, setSelectedImage] = useState(null);
+   
 
 
 
@@ -16,7 +16,8 @@ function ProfilePictureUpload({handleUploadImage , isUploadImageActive ,displayI
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        setSelectedImage(URL.createObjectURL(file));
+        
+        setProfileImage(currentUser.uid , URL.createObjectURL(file) )
         
        
 
@@ -24,28 +25,9 @@ function ProfilePictureUpload({handleUploadImage , isUploadImageActive ,displayI
 
 
 
-    // async function uploadImage() {
-    //     try {
-    //         const snapshot = await setProfileImage(currentUser.uid, selectedImage)
-    //         getProfileImage(currentUser.uid, setDisplayImage)
-
-    //         console.log(displayImage)
-    //     } catch (error) {
-    //         console.log("failed to set profile pic")
-    //     }
-
-    // }
-
- 
-   
 
 
-
-    useEffect(() => {
-        setProfileImage(currentUser.uid , selectedImage)
-          
-
-    }, [selectedImage])
+  
 
     return (
 
