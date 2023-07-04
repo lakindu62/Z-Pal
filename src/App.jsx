@@ -13,7 +13,7 @@ import Progress from './pages/Progress.jsx'
 import Settings from './pages/Settings.jsx'
 import SplitsNav from './components/splits/SplitsNav.jsx'
 import Splits from './pages/splits/UserSplits.jsx'
-import SplitsMuscleGroup from './pages/splits/splits-MuscleGroup.jsx'
+import SplitsMuscleGroup from './pages/splits/UserSplits-muscleGroup.jsx'
 import Friends from './pages/Friends.jsx'
 
 
@@ -23,7 +23,7 @@ import Nav from './components/Nav.jsx'
 import PrivateRoutes from "./components/PrivateRoutes.jsx"
 
 import { SplitsProvider } from './contexts/splitContext.jsx'
-import { SplitsMuscleGroupExercise } from './pages/splits/splits-muscleGroup-exercise.jsx'
+import { SplitsMuscleGroupExercise } from './pages/splits/UserSplits-muscleGroup-exercise.jsx'
 
 
 
