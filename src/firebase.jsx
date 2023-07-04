@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {initializeApp} from 'firebase/app'
 import {
     getFirestore,
@@ -9,6 +10,9 @@ import {
     getAuth,
     signInWithEmailAndPassword,
 } from 'firebase/auth'
+import { useLocation } from 'react-router-dom'
+
+
 
 
 
@@ -41,6 +45,10 @@ function setUser({email , fName , sName , dob  , userId}){
         sName,
         dob
     })
+}
+
+function getUserSplits(){
+
 }
 
 

@@ -7,10 +7,14 @@ import { useAuth } from '../contexts/auth';
 import { getDate, dateWithFormat, getYesterdaysDate } from '../utils'
 
 import { useNavigate , useLocation } from 'react-router-dom';
+import { nanoid } from 'nanoid';
 
 
 const Tabs = () => {
-    const { currentUser } = useAuth()
+
+    const { currentUser , userDetails } = useAuth()
+
+
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -61,9 +65,29 @@ const Tabs = () => {
 
 
 
+ const userLogsCollection = collection(db ,`/users/${currentUser.uid}/userLogs`)
+// console.log(userLogsCollection)
+
+const [logs , setLogs]  = useState([])
 
 
+useEffect(()=>{
+    onSnapshot(userLogsCollection , userLogs =>{
 
+
+        const receivedLogs = userLogs.docs.map(doc=>{
+            return {
+                ...doc.data() , 
+                id:doc.id
+            }
+        })
+    
+        setLogs(receivedLogs)
+    })
+},[currentUser])
+
+
+// console.log(logs)
 
 
 
@@ -72,7 +96,7 @@ const Tabs = () => {
 
 
     useEffect(() => {
-        onSnapshot(docRef, (snapshot) => {
+        const unsubscribe = onSnapshot(docRef, (snapshot) => {
             const data = snapshot.data();
 
             if (!data) {
@@ -88,6 +112,10 @@ const Tabs = () => {
             }));
             setBodyParts(updatedBodyParts);
         });
+
+        return ()=>{
+            unsubscribe()
+        }
     }, [path]);
 
 
@@ -117,7 +145,7 @@ const Tabs = () => {
                     <div className='w-1/4'></div>
                     <div className='flex gap-3 justify-center items-center'>
                         <img onClick={() => modifyDate(-1)} src="/icons/backwards.svg" alt="" />
-                        <span onClick={handleInputDataClick}>{getDateEl()}</span>
+                        <span className='w-20 text-center' onClick={handleInputDataClick}>{getDateEl()}</span>
                         <img onClick={() => modifyDate(+1)} src="/icons/forwards.svg" alt="" />
 
                         {isInputVisible && <InputDate handleDateSubmit={handleDateSubmit} />}
@@ -132,7 +160,7 @@ const Tabs = () => {
                         <ul className="flex gap-3   list-none first">
                             {bodyParts?.map((data) => {
                                 const bodyPartName = Object.keys(data)[0]
-                                return (<li
+                                return (<li key={nanoid()}
                                     className={`tab cursor-pointer  ${activeTab === `#${bodyPartName}` ? 'active' : ''}
                               text-black px-3 text-sm  rounded-xl relative after:content-[''] after:h-5/6 after:w-[2px] after:block after:absolute after:left-0 after:bg-background-200 after:top-[10%] first:after:w-0
                                     `}
@@ -156,6 +184,7 @@ const Tabs = () => {
 
                             return (
                                 <div
+                                    key={nanoid()}
                                     id="home"
                                     data-tab-content
                                     className={`tab-pane ${activeTab === `#${bodyPartName}` ? 'active' : ''} `}

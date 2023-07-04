@@ -1,5 +1,6 @@
 import React from 'react'
 import { getDate } from '../../utils'
+
 export default function DisplayLog({loggedBodyPartsElement , dateFromLocation}) {
     
     return(

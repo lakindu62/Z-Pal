@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { auth, usersCollection } from '../firebase'
+import { getProfileImage } from '../firebase-storage'
 
 import {
     updateDoc,
     doc,
-    onSnapshot
+    onSnapshot,
+    setDoc
 } from "firebase/firestore"
 
 import {
@@ -102,16 +104,51 @@ export default function AuthProvider({ children }) {
     }, [])
 
 
+
+
+    const [profileImageUrl, setProfileImageUrl] = useState('wg')
+
+    async function updateCurrentUserDetails(data) {
+        try {
+            if (!data || typeof data !== 'object') {
+                throw new Error('Invalid data provided');
+            }
+
+            const userDoc = doc(usersCollection, currentUser.uid);
+            await setDoc(userDoc, data);
+
+            console.log('User details updated successfully');
+            return true;
+        } catch (error) {
+            console.error('Error updating user details:', error);
+            return false;
+        }
+    }
+
+
     useEffect(() => {
 
         if (currentUser) {
             const userDoc = doc(usersCollection, currentUser.uid)
 
-            onSnapshot(userDoc, doc => {
+            const unsubscribe = onSnapshot(userDoc, doc => {
                 setUserDetails(doc.data())
 
             })
+
+
+
+
         }
+
+        currentUser && getProfileImage(currentUser.uid)
+            .then(url => {
+                setProfileImageUrl(url)
+                console.log(url)
+            })
+            .catch(error => {
+                console.log(error)
+            })
 
 
 
@@ -131,15 +168,17 @@ export default function AuthProvider({ children }) {
         changePassword,
         resetPassword,
         changeUserEmailInDb,
-        userDetails
-
+        userDetails,
+        profileImageUrl,
+        updateCurrentUserDetails
     }
+
+
 
 
     return (
         <authContext.Provider value={value}>
             {!loading && children}
         </authContext.Provider>
-
     )
 }

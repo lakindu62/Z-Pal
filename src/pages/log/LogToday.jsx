@@ -5,6 +5,8 @@ import LogBodyPartSelection from '../../components/log/LogBodyPartSelection'
 import LogExercise from '../../components/log/LogExercise';
 import LogSet from '../../components/log/LogSet';
 import DisplayLog from '../../components/log/DisplayLog';
+import SelectActiveSplit from '../../components/splits/SelectActiveSplit';
+import { useSplitsState } from '../../contexts/splitContext';
 import { useAuth } from '../../contexts/auth';
 import { getDate } from '../../utils';
 import { setDoc, doc, onSnapshot } from 'firebase/firestore';
@@ -15,7 +17,6 @@ export default function () {
     const { currentUser } = useAuth()
     const navigate = useNavigate()
     const [log, setLog] = useState({
-
     });
     const [isBodypartsSelected, setIsBodypartsSelected] = useState(false)
     const [isAddExerciseActive, setIsAddExerciseActive] = useState(false)
@@ -34,37 +35,64 @@ export default function () {
 
 
     useEffect(() => {
-        console.log(location.state ? location.state : null)
+
         const date = location.state
         if (location.state) {
             const path = `/users/${currentUser.uid}/userLogs/${date}`
             console.log(path)
             const docRef = doc(db, path)
 
-            onSnapshot(docRef, snapshot => {
+            const unsubscribe =  onSnapshot(docRef, snapshot => {
                 console.log(snapshot)
                 setLog(snapshot.data())
 
             })
+
+            return ()=>{
+                unsubscribe()
+            }
         }
+
+       
+
 
     }, [location])
 
 
 
 
+const {splits} = useSplitsState()
+
+const activeSplit = splits?.find(split=>{
+    return split.isActive === true
+})
+// console.log("🚀 ~ file: LogToday.jsx:70 ~ activeSplit ~ activeSplit:", activeSplit?.muscleGroups)
+
+// console.log(splits)
+
+const muscleGroup = activeSplit?.muscleGroups
+console.log(muscleGroup)
 
 
+ 
     // Function to handle checkbox change
     function handleCheckboxChange(e) {
         const checkboxValue = e.target.value
+        // updatedExercisesArr = [...muscleGroup[checkboxValue]]
+
+        const exercises = muscleGroup[checkboxValue]?.reduce((obj , exercie)=>{
+            obj[exercie] = []
+            return obj
+        },{})
+
+
+
+        console.log("SPLIT MG => " , exercises)
         setLog(prevLog => {
             if (e.target.checked) {
                 return {
                     ...prevLog,
-                    [checkboxValue]: {
-
-                    }
+                    [checkboxValue]: exercises
 
 
 
@@ -75,7 +103,17 @@ export default function () {
                 return updatedDictionary
             }
         })
+
+      
     }
+
+    function handleIsBodypartsSelected() {
+        setIsBodypartsSelected(!isBodypartsSelected)
+
+
+    }
+
+
 
 
     function addExercise(bodyPart, exercise) {
@@ -135,9 +173,9 @@ export default function () {
 
 
 
-    function handleIsBodypartsSelected() {
-        setIsBodypartsSelected(!isBodypartsSelected)
-    }
+  
+
+
     function handleisAddExerciseActive(bodyPart) {
         setIsAddExerciseActive(!isAddExerciseActive)
         setSelectedBodyPart(bodyPart)
@@ -174,6 +212,7 @@ export default function () {
 
 
     function handleRepsChange(e) {
+        console.log(e.target)
         setSetInput(prevSet => ({
             ...prevSet,
             reps: e.target.value
@@ -212,7 +251,7 @@ export default function () {
                 <img onClick={() => handleisAddExerciseActive(bodyPartKey)} src="/icons/add-black.svg" alt="" />
             </div>
 
-            {Object.entries(value)?.map(([exercise, exerciseValue]) => {
+            {value && Object.entries(value)?.map(([exercise, exerciseValue]) => {
                 return <div key={nanoid()} className=' w-full flex justify-center items-center flex-col'>
                     <div onClick={() => handleIsSetActive(bodyPartKey, exercise)} className='flex items-center justify-center max-w-[600px]  gap-6 px-4 py-2 h-[40px] w-[50%] mt-4  bg-background-200  shadow-inner text-slate-600 text-xs font-bold tracking-tight rounded-3xl  '>
                         <span className='min-w-[100px]'>{exercise}</span>
@@ -220,7 +259,7 @@ export default function () {
                     </div>
                     <div className=' flex flex-col justify-center '>
                         {exerciseValue?.map(setObj => {
-                            console.log(exerciseValue)
+                           
                             return (
                                 <div key={nanoid()} className=''>
                                     <div className='flex gap-10 mt-3 text-slate-500 text-xs'>
@@ -247,8 +286,6 @@ export default function () {
             })}
         </div>
     })
-
-
 
 
 
