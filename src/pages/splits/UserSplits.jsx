@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid'
 
 
 
-const splits = () => {
+const Splits = () => {
 
     const { splits, setSplits } = useSplitsState()
 
@@ -82,4 +82,4 @@ const splits = () => {
     )
 }
 
-export default splits
+export default Splits

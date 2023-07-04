@@ -12,7 +12,7 @@ import LogToday from './pages/log/LogToday.jsx'
 import Progress from './pages/Progress.jsx'
 import Settings from './pages/Settings.jsx'
 import SplitsNav from './components/splits/SplitsNav.jsx'
-import Splits from './pages/splits/splits.jsx'
+import Splits from './pages/splits/UserSplits.jsx'
 import SplitsMuscleGroup from './pages/splits/splits-MuscleGroup.jsx'
 import Friends from './pages/Friends.jsx'
 
